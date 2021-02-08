@@ -41,7 +41,7 @@ app.get('/api/session', (req, res) => {
   if (req.session.user) {
     res.json(req.session.user)
   } else {
-    res.json('not logged in')
+    res.json(false)
   }
 })
 
@@ -49,6 +49,7 @@ app.get('/logout', (req, res) => {
   req.session.destroy()
   res.redirect('/')
 })
+
 
 app.post('/signUp', (req, res) => {
 

@@ -19,8 +19,9 @@ $(document).ready(() => {
                 if (!data) {
                     $('#loginFail').removeClass('hide')
                 } else {
-                    location.href = `/`
-                    console.log(data)
+                    $("#loginWindow").fadeOut('slow', () => {
+                        location.href = `/`
+                    })
                 }
             })
         }

@@ -16,20 +16,24 @@
     <div class="nav-wrapper">
       <a class="brand-logo home">Gym Buddy</a>
       <a href="" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">fitness_center</i></a>
-      <!-- <ul class="right hide-on-med-and-down">
-        <li><a href="">Home</a></li>
-      </ul> -->
+      <ul class="right hide-on-med-and-down">
+        <li><a class="logout">logout</a></li>
+      </ul>
     </div>
   </nav>
   <!-- responsive nav menu items on page shrink -->
   <ul class="sidenav" id="mobile-demo">
-    <li><a class="home">Home</a></li>
+    <li><a class="logout">logout</a></li>
   </ul>
+
+  <div class="container">
+    <div class="row" id="messageBoard" style="display:none">
+    </div>
+  </div>
   <main style="display:none">
+
     <!-- ------------------------------------------- LANDING ----------------------------------------------- -->
-    <div class="collection landing" id="landingWindow">
-      <br>
-      <br>
+    <div class="collection container" id="landingWindow">
       <a href="" class="collection-item landing-item" id="signUpBtn">sign up</a>
       <a href="" class="collection-item landing-item" id="signInBtn">login</a>
     </div>
@@ -133,6 +137,7 @@
       <h1>activeRoutine</h1>
     </div>
   </main>
+
 
 
 

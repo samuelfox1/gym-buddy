@@ -1,6 +1,10 @@
 const express = require("express");
 const mongojs = require("mongojs");
 const logger = require("morgan");
+const bcrypt = require("bcrypt");
+const session = require("express-session");
+require("dotenv").config();
+
 
 const app = express();
 
@@ -9,22 +13,100 @@ app.use(logger("dev"));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
+app.use(
+  session({
+    secret: process.env.SESSION_SECRET,
+
+    resave: false,
+    saveUninitialized: false,
+    cookie: {
+      maxAge: 1000 * 60 * 60 * 2,
+    },
+  })
+);
+
 app.use(express.static("public"));
 
 const databaseUrl = "gymbuddy";
-const userCollection = ["users"];
-const routineCollection = ["routines"];
+const collection = ["users", "routines"];
+const db = mongojs(databaseUrl, collection);
 
-const users = mongojs(databaseUrl, userCollection);
-const routines = mongojs(databaseUrl, routineCollection);
 
-users.on("error", error => {
+db.on("error", error => {
   console.log("Database Error:", error);
 });
 
-routines.on("error", error => {
-  console.log("Database Error:", error);
-});
+
+app.get('/api/session', (req, res) => {
+  if (req.session.user) {
+    res.json(req.session.user)
+  } else {
+    res.json('not logged in')
+  }
+})
+
+app.get('/logout', (req, res) => {
+  req.session.destroy()
+  res.redirect('/')
+})
+
+app.post('/signUp', (req, res) => {
+
+  db.users.find({}, (err, data) => {
+    if (err) {
+      console.log(err)
+      res.status(500).send("error")
+    } else {
+      let uniqueUsername = true
+      data.forEach(x => {
+        if (x.username === req.body.username) { uniqueUsername = false }
+      });
+      if (!uniqueUsername) {
+        res.json(false)
+      } else {
+        db.users.insert({
+          username: req.body.username,
+          first_name: req.body.first_name,
+          last_name: req.body.last_name,
+          email: req.body.email,
+          password: bcrypt.hashSync(req.body.password, bcrypt.genSaltSync(10), null)
+        }, (err, data) => {
+          if (err) {
+            console.log(err)
+            res.status(500).send("error")
+          } else {
+            res.json(true)
+          }
+        })
+      }
+    }
+  })
+})
+
+
+app.post('/login', (req, res) => {
+  db.users.findOne({
+    username: req.body.username
+  }, (err, data) => {
+    if (err) {
+      console.log(err)
+      res.status(500).send("error")
+    } else {
+      if (bcrypt.compareSync(req.body.password, data.password)) {
+        req.session.user = {
+          username: data.username,
+          first_name: data.first_name,
+          last_name: data.last_name,
+        }
+        res.json(data.first_name)
+      } else {
+        res.json(false)
+      }
+    }
+  })
+})
+
+
 
 
 // TODO: You will make six more routes. Each will use mongojs methods

@@ -1,19 +1,23 @@
-console.log('linked!')
-
-// document.addEventListener('DOMContentLoaded', function () {
-//     var elems = document.querySelectorAll('.sidenav');
-//     var instances = M.Sidenav.init(elems, options);
-// });
-
-// Or with jQuery
-
-$(document).ready(function () {
+$(document).ready(() => {
     $('.sidenav').sidenav();
-});
 
+    $(document).on("click", "#signUpBtn", (event) => {
+        event.preventDefault()
+        $('#landingWindow').slideUp('slow')
+        $('#signUpWindow').fadeIn()
+    })
 
-$(document).on("click", "#signUpBtn", (event) => {
-    event.preventDefault()
-    $('#landingWindow').toggleClass('hide')
-    $('#signUpWindow').toggleClass('hide')
+    $(document).on('click', ".home", () => {
+        $('main').fadeOut(() => {
+            location.href = "/"
+        })
+    })
+
+    $(document).on("click", "#signInBtn", (event) => {
+        event.preventDefault()
+        $('#landingWindow').slideUp('slow')
+        $("#loginWindow").fadeIn('hide')
+    })
+
+    $('main').fadeIn('slow')
 })

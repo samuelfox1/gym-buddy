@@ -14,8 +14,8 @@
 <body>
   <nav>
     <div class="nav-wrapper">
-      <a href="/" class="brand-logo">Gym Buddy</a>
-      <a href="" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">arrow_back</i></a>
+      <a class="brand-logo home">Gym Buddy</a>
+      <a href="" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">fitness_center</i></a>
       <!-- <ul class="right hide-on-med-and-down">
         <li><a href="">Home</a></li>
       </ul> -->
@@ -23,50 +23,124 @@
   </nav>
   <!-- responsive nav menu items on page shrink -->
   <ul class="sidenav" id="mobile-demo">
-    <li><a href="">Home</a></li>
+    <li><a class="home">Home</a></li>
   </ul>
+  <main style="display:none">
+    <!-- ------------------------------------------- LANDING ----------------------------------------------- -->
+    <div class="collection landing" id="landingWindow">
+      <br>
+      <br>
+      <a href="" class="collection-item landing-item" id="signUpBtn">sign up</a>
+      <a href="" class="collection-item landing-item" id="signInBtn">login</a>
+    </div>
+    <!-- ------------------------------------------- SIGN UP ----------------------------------------------- -->
+    <div class="container" id="signUpWindow" style="display:none">
+      <div class="row">
+        <form class="col s12">
+          <div class="row">
+            <div class="input-field col s6">
+              <input id="first_name" type="text" class="validate">
+              <label for="first_name">First Name</label>
+            </div>
+            <div class="input-field col s6">
+              <input id="last_name" type="text" class="validate">
+              <label for="last_name">Last Name</label>
+            </div>
+          </div>
+          <div class="row">
+            <div class="input-field col s12">
+              <input id="username" type="text" class="validate">
+              <label for="username">username</label>
+            </div>
+          </div>
+          <div class="row">
+            <div class="input-field col s12">
+              <input id="email" type="email" class="validate">
+              <label for="email">email</label>
+            </div>
+          </div>
+          <div class="row">
+            <div class="input-field col s12">
+              <input id="password" type="password" class="validate">
+              <label for="password">Password</label>
+              <!-- <span class="helper-text" data-error="wrong" data-success="right">8-16</span> -->
+              <span class="helper-text">8-16 characters</span>
+            </div>
+          </div>
+          <div class="row">
+            <div class="input-field col s12">
+              <input id="passwordConf" type="password" class="validate">
+              <label for="passwordConf">Confirm Password</label>
+            </div>
+          </div>
+          <div class="row">
+            <input type="submit" value="Sign Up" id="submitSignUpBtn">
+          </div>
+          <div class="row">
+            <h6 class="hide error" id="signUpErrorMessage">check passwords</h6>
+            <h6 class="hide error" id="usernameAlreadyInUse">username already in use</h6>
+          </div>
+        </form>
+      </div>
+      <form action="" class="signUpForm"></form>
+    </div>
+    <!-- ------------------------------------------- LOGIN ------------------------------------------------- -->
+    <div class="container" id="loginWindow" style="display:none">
+      <div class="row">
+        <form class="col s12">
+          <div class="row">
+            <div class="input-field col s12">
+              <input id="loginUsername" type="text" class="validate">
+              <label for="loginUsername">username</label>
+            </div>
+          </div>
+          <div class="row">
+            <div class="input-field col s12">
+              <input id="loginPassword" type="password" class="validate">
+              <label for="loginPassword">Password</label>
+              <!-- <span class="helper-text" data-error="wrong" data-success="right">8-16</span> -->
+              <span class="helper-text">8-16 characters</span>
+            </div>
+          </div>
+          <div class="row">
+            <input type="submit" value="Login" id="submitLoginBtn">
+          </div>
+          <div class="row">
+            <h6 class="hide error" id="loginFail">wrong username or password</h6>
+          </div>
+        </form>
+      </div>
+    </div>
+    <!-- ------------------------------------------- HOME -------------------------------------------------- -->
+    <div id="homeWindow" style="display:none">
+      <h1>userHome</h1>
+    </div>
+    <!-- ------------------------------------------- EDIT PROFILE ------------------------------------------ -->
+    <div id="editProfileWindow" style="display:none">
+      <h1>editProfile</h1>
+    </div>
+    <!-- ------------------------------------------- NEW ROUTINE ------------------------------------------- -->
+    <div id="newRoutineWindow" style="display:none">
+      <h1>newRoutine</h1>
+    </div>
 
-  <!-- ------------------------------------------- LANDING ----------------------------------------------- -->
-  <div class="collection landing" id="landingWindow">
-    <a href="" class="collection-item landing-item" id="signInBtn">sign in</a>
-    <a href="" class="collection-item landing-item" id="signUpBtn">sign up</a>
-  </div>
-  <!-- ------------------------------------------- SIGN UP ----------------------------------------------- -->
-  <div class="hide" id="signUpWindow">
-    <H1>signUp</H1>
-  </div>
-  <!-- ------------------------------------------- LOGIN ------------------------------------------------- -->
-  <div class="hide" id="loginWindow">
-    <h1>login</h1>
-  </div>
-  <!-- ------------------------------------------- HOME -------------------------------------------------- -->
-  <div class="hide" id="homeWindow">
-    <h1>userHome</h1>
-  </div>
-  <!-- ------------------------------------------- EDIT PROFILE ------------------------------------------ -->
-  <div class="hide" id="editProfileWindow">
-    <h1>editProfile</h1>
-  </div>
-  <!-- ------------------------------------------- NEW ROUTINE ------------------------------------------- -->
-  <div class="hide" id="newRoutineWindow">
-    <h1>newRoutine</h1>
-  </div>
-
-  <!-- ------------------------------------------- EDIT ROUTINE ------------------------------------------ -->
-  <div class="hide" id="editRoutineWindow">
-    <h1>editRoutine</h1>
-  </div>
-  <!-- ------------------------------------------- ACTIVE ROUTINE ---------------------------------------- -->
-  <div class="hide" id="activeRoutineWindow">
-    <h1>activeRoutine</h1>
-  </div>
-
+    <!-- ------------------------------------------- EDIT ROUTINE ------------------------------------------ -->
+    <div id="editRoutineWindow" style="display:none">
+      <h1>editRoutine</h1>
+    </div>
+    <!-- ------------------------------------------- ACTIVE ROUTINE ---------------------------------------- -->
+    <div id="activeRoutineWindow" style="display:none">
+      <h1>activeRoutine</h1>
+    </div>
+  </main>
 
 
 
   <script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="
     crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+  <script src="assets/js/signUp.js"></script>
+  <script src="assets/js/login.js"></script>
   <script src="assets/js/script.js"></script>
 </body>
 

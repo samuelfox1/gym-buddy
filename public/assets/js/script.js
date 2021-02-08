@@ -11,7 +11,17 @@ $(document).ready(() => {
     })
 
     doc.on('click', '.logout', () => {
-
+        $.ajax({
+            type: 'GET',
+            dataType: 'json',
+            url: '/logout'
+        }).then(data => {
+            $('main').fadeOut('slow', () => {
+                location.href = "/"
+            })
+        }).fail(err => {
+            console.log(err)
+        })
     })
 
 
@@ -31,7 +41,7 @@ $(document).ready(() => {
     })
 
 
-
+    // Call api/session to retrieve active session data if a user is logged in
     function loadSession() {
         $.ajax({
             type: 'GET',
@@ -39,11 +49,9 @@ $(document).ready(() => {
             url: 'api/session'
         }).then(data => {
             if (data) {
-                console.log(data, "true")
                 $('#messageBoard').prepend(`<h5>welcome, ${data.first_name}</h5>`)
                 $('#messageBoard').fadeIn('slow')
             } else {
-                console.log(data, "false")
                 $('#messageBoard').prepend(`<h5>please login or sign up</h5>`)
                 $('#messageBoard').fadeIn('slow')
                 $('main').fadeIn('slow')

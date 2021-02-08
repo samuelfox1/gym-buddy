@@ -47,7 +47,7 @@ app.get('/api/session', (req, res) => {
 
 app.get('/logout', (req, res) => {
   req.session.destroy()
-  res.redirect('/')
+  res.json('goodbye')
 })
 
 

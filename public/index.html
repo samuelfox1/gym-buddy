@@ -56,11 +56,15 @@
               <input id="username" type="text" class="validate">
               <label for="username">username</label>
             </div>
+            <div class="error" id="signUpErrorUsername">
+            </div>
           </div>
           <div class="row">
             <div class="input-field col s12">
               <input id="email" type="email" class="validate">
               <label for="email">email</label>
+            </div>
+            <div class="error" id="signUpErrorEmail">
             </div>
           </div>
           <div class="row">
@@ -70,19 +74,19 @@
               <!-- <span class="helper-text" data-error="wrong" data-success="right">8-16</span> -->
               <span class="helper-text">8-16 characters</span>
             </div>
+            <div class="error" id="signUpErrorPassword">
+            </div>
           </div>
           <div class="row">
             <div class="input-field col s12">
               <input id="passwordConf" type="password" class="validate">
               <label for="passwordConf">Confirm Password</label>
             </div>
+            <div class="error" id="signUpErrorConfirmPassword">
+            </div>
           </div>
           <div class="row">
             <input type="submit" value="Sign Up" id="submitSignUpBtn">
-          </div>
-          <div class="row">
-            <h6 class="hide error" id="signUpErrorMessage">check passwords</h6>
-            <h6 class="hide error" id="usernameAlreadyInUse">username already in use</h6>
           </div>
         </form>
       </div>

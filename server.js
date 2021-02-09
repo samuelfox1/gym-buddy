@@ -1,18 +1,41 @@
+//express router and setup and session cookie
 const express = require("express");
-const mongojs = require("mongojs");
-const logger = require("morgan");
-const bcrypt = require("bcrypt");
 const session = require("express-session");
+
+// mongoDB tools
+const mongoose = require("mongoose");
+
+//logs the network activity and status codes
+const logger = require("morgan");
+
+//used to encrypt passwords and hide sensitive information
+const bcrypt = require("bcrypt");
 require("dotenv").config();
 
-
+// setup express router and data parsing
+const PORT = process.env.PORT || 8080;
 const app = express();
-
 app.use(logger("dev"));
-
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+app.use(express.static("public"));
 
+
+// set mongoDB source and connect collection model files
+const db = require("./models");
+mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/gymbuddy", {
+  useNewUrlParser: true,
+  useFindAndModify: false,
+  useUnifiedTopology: true
+});
+
+// Original mongoDB setup without using mongoose ORM
+// const mongojs = require("mongojs");
+// const databaseUrl = "gymbuddy";
+// const collection = ["users", "routines"];
+// const db = mongojs(databaseUrl, collection);
+
+//session settings
 app.use(
   session({
     secret: process.env.SESSION_SECRET,
@@ -25,16 +48,6 @@ app.use(
   })
 );
 
-app.use(express.static("public"));
-
-const databaseUrl = "gymbuddy";
-const collection = ["users", "routines"];
-const db = mongojs(databaseUrl, collection);
-
-
-db.on("error", error => {
-  console.log("Database Error:", error);
-});
 
 
 app.get('/api/session', (req, res) => {
@@ -52,41 +65,46 @@ app.get('/logout', (req, res) => {
 
 
 app.post('/signUp', (req, res) => {
+  let uniqueUsername = true
+  let uniqueEmail = true
 
-  db.users.find({}, (err, data) => {
+  db.User.find({}, (err, data) => {
     if (err) {
       console.log(err)
       res.status(500).send("error")
     } else {
-      let uniqueUsername = true
       data.forEach(x => {
         if (x.username === req.body.username) { uniqueUsername = false }
+        if (x.email === req.body.email) { uniqueEmail = false }
       });
-      if (!uniqueUsername) {
-        res.json(false)
-      } else {
-        db.users.insert({
-          username: req.body.username,
-          first_name: req.body.first_name,
-          last_name: req.body.last_name,
-          email: req.body.email,
-          password: bcrypt.hashSync(req.body.password, bcrypt.genSaltSync(10), null)
-        }, (err, data) => {
-          if (err) {
-            console.log(err)
-            res.status(500).send("error")
-          } else {
-            res.json(true)
-          }
-        })
-      }
     }
+
+    if (uniqueUsername && uniqueEmail) {
+      console.log('creating entry =====================')
+      db.User.create({
+        username: req.body.username,
+        first_name: req.body.first_name,
+        last_name: req.body.last_name,
+        email: req.body.email,
+        password: bcrypt.hashSync(req.body.password, bcrypt.genSaltSync(10), null)
+      }, (err, data) => {
+        if (err) {
+          console.log(err)
+          res.status(500).json(err)
+        } else {
+          res.json({ username: uniqueUsername, email: uniqueEmail })
+        }
+      })
+    } else {
+      res.send({ username: uniqueUsername, email: uniqueEmail })
+    }
+
   })
 })
 
 
 app.post('/login', (req, res) => {
-  db.users.findOne({
+  db.User.findOne({
     username: req.body.username
   }, (err, data) => {
     if (err) {
@@ -197,6 +215,6 @@ app.post('/login', (req, res) => {
 // })
 
 // Listen on port 3000
-app.listen(3000, () => {
+app.listen(PORT, () => {
   console.log("App running on port 3000!");
 });

@@ -43,44 +43,37 @@
         <form class="col s12">
           <div class="row">
             <div class="input-field col s6">
-              <input id="first_name" type="text" class="validate">
-              <label for="first_name">First Name</label>
+              <input id="signUpFirst_name" type="text" class="validate">
+              <label for="signUpFirst_name" id="signUpLabelFirstName">First Name</label>
             </div>
             <div class="input-field col s6">
-              <input id="last_name" type="text" class="validate">
-              <label for="last_name">Last Name</label>
+              <input id="signUpLast_name" type="text" class="validate">
+              <label for="signUpLast_name" id="signUpLabelLastName">Last Name</label>
             </div>
           </div>
           <div class="row">
             <div class="input-field col s12">
-              <input id="username" type="text" class="validate">
-              <label for="username">username</label>
-            </div>
-            <div class="error" id="signUpErrorUsername">
+              <input id="signUpUsername" type="text" class="validate">
+              <label for="signUpUsername" id="signUpLabelUsername">username</label>
             </div>
           </div>
           <div class="row">
             <div class="input-field col s12">
-              <input id="email" type="email" class="validate">
-              <label for="email">email</label>
-            </div>
-            <div class="error" id="signUpErrorEmail">
+              <input id="signUpEmail" type="email" class="validate">
+              <label for="signUpEmail" id="signUpLabelEmail">email</label>
             </div>
           </div>
           <div class="row">
             <div class="input-field col s12">
-              <input id="password" type="password" class="validate">
-              <label for="password">Password</label>
-              <!-- <span class="helper-text" data-error="wrong" data-success="right">8-16</span> -->
-              <span class="helper-text">8-16 characters</span>
-            </div>
-            <div class="error" id="signUpErrorPassword">
+              <input id="signUpPassword" type="password" class="validate">
+              <label for="signUpPassword" id="signUpLabelPassword">Password</label>
+              <span class="helper-text">8-16 characters long</span>
             </div>
           </div>
           <div class="row">
             <div class="input-field col s12">
-              <input id="passwordConf" type="password" class="validate">
-              <label for="passwordConf">Confirm Password</label>
+              <input id="signUpPasswordConf" type="password" class="validate">
+              <label for="signUpPasswordConf" id="signUpLabelConfirmPassword">Confirm Password</label>
             </div>
             <div class="error" id="signUpErrorConfirmPassword">
             </div>
@@ -99,7 +92,7 @@
           <div class="row">
             <div class="input-field col s12">
               <input id="loginUsername" type="text" class="validate">
-              <label for="loginUsername">username</label>
+              <label for="loginUsername" id="LoginLabelUsername">username</label>
             </div>
           </div>
           <div class="row">
@@ -112,9 +105,6 @@
           </div>
           <div class="row">
             <input type="submit" value="Login" id="submitLoginBtn">
-          </div>
-          <div class="row">
-            <h6 class="hide error" id="loginFail">wrong username or password</h6>
           </div>
         </form>
       </div>

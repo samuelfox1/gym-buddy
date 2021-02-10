@@ -107,10 +107,9 @@ app.post('/login', (req, res) => {
   db.User.findOne({
     username: req.body.username
   }, (err, data) => {
-    if (err) {
-      console.log(err)
-      res.status(500).send("error")
-    } else {
+    console.log(data)
+    if (err) { console.log(err), res.status(500).send("error") }
+    if (data) {
       if (bcrypt.compareSync(req.body.password, data.password)) {
         req.session.user = {
           username: data.username,
@@ -118,10 +117,8 @@ app.post('/login', (req, res) => {
           last_name: data.last_name,
         }
         res.json(data.first_name)
-      } else {
-        res.json(false)
-      }
-    }
+      } else { res.json(false) }
+    } else { res.json(false) }
   })
 })
 
@@ -218,3 +215,27 @@ app.post('/login', (req, res) => {
 app.listen(PORT, () => {
   console.log("App running on port 3000!");
 });
+
+
+
+
+
+// ALL ROUTINE DIV
+//TODO: static form to add new routine
+//TODO: post request to /api/routine to add routines on form submit
+
+// SAVED ROUTINES UL
+//TODO: get request /api/routine to get saved routines and populate a ul with an li for each saved routine
+//TODO: when a routine is selected, get request to api/routine/:id, then fade out routines div, fade in selected routine div
+
+// SELECTED ROUTINE DIV 
+//TODO: each routine div has static form to add exercise
+//TODO: post request to /api/exercise to add exercises to routines
+//TODO: each routine card has an edit title button
+//TODO: each routine card has a delete routine button
+
+//SAVED EXERCISES UL
+//TODO: get request to /api/exercises to get saved exercises and populate a ul with an li for each exercise
+//TODO: each exercise has title, type, weight, sets, reps, duration, cardio toggle w/ distance if isCardio
+//TODO: each exercise li has edit button, make the form look like the li, to activate/deactivate the text field. the edit button doubles as the submit button
+//TODO: each exercise li has delete button

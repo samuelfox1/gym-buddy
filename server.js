@@ -95,7 +95,6 @@ app.post('/login', (req, res) => {
 
 
 
-//TODO: post request to /api/routine to add routines on form submit
 app.post('/api/routine/:id', (req, res) => {
   if (req.session.user) {
     const username = req.session.user.username
@@ -108,8 +107,8 @@ app.post('/api/routine/:id', (req, res) => {
   } else { res.json('please login') }
 })
 
-// SAVED ROUTINES UL
-//TODO: get request /api/routine to get saved routines and populate a ul with an li for each saved routine
+
+
 app.get('/api/routine', (req, res) => {
   if (req.session.user) {
     const username = req.session.user.username
@@ -130,12 +129,16 @@ app.get('/api/routine/:id', (req, res) => {
   } else { res.json('please login') }
 })
 
+app.post('/api/exercise', (req, res) => {
+  if (req.session.user) {
+    db.Exercise.create(req.body)
+      .then(({ _id }) => db.Routine.findOneAndUpdate({ _id: req.body.id }, { $push: { exercises: _id } }, { new: true }))
+      .then(data => { res.json(data) })
+      .catch(err => { res.json(err) })
+  } else { res.json('please login') }
+})
 
 
-//TODO: when a routine is selected, get request to api/routine/:id, then fade out routines div, fade in selected routine div
-
-// SELECTED ROUTINE DIV 
-//TODO: each routine div has static form to add exercise
 //TODO: post request to /api/exercise to add exercises to routines
 //TODO: each routine card has an edit title button
 //TODO: each routine card has a delete routine button

@@ -6,25 +6,25 @@ $(document).ready(function () {
     // })
     $(document).on('click', '#submitExerciseBtn', function (event) {
         event.preventDefault()
-        const title = $('#addExerciseTitle').val().trim()
-        const type = $('#addExerciseType').val().trim()
-        const weight = $('#addExerciseWeight').val().trim()
-        const sets = $('#addExerciseSets').val().trim()
-        const reps = $('#addExerciseReps').val().trim()
-        const duration = $('#addExerciseDuration').val().trim()
-        const cardio = $('#cardioCheckbox').val()
-        const distance = $('#addExerciseDistance').val().trim()
+
         const exercise = {
-            title: title,
-            type: type,
-            weight: weight,
-            sets: sets,
-            reps: reps,
-            duration: duration,
-            cardio: cardio,
-            distance: distance
+            id: $('#selectedRoutineTitle').data('id'),
+            title: $('#addExerciseTitle').val().trim(),
+            type: $('#addExerciseType').val().trim(),
+            weight: parseInt($('#addExerciseWeight').val().trim()),
+            sets: parseInt($('#addExerciseSets').val().trim()),
+            reps: parseInt($('#addExerciseReps').val().trim()),
+            duration: parseInt($('#addExerciseDuration').val().trim()),
+            // cardio: $('#cardioCheckbox').val(),
+            distance: $('#addExerciseDistance').val().trim()
         }
-        console.log(exercise)
+        $.ajax({
+            type: 'POST',
+            dataType: 'json',
+            url: '/api/exercise',
+            data: exercise
+        }).then(data => { console.log(data) })
+            .fail(err => { console.log(err) })
     })
 
 })

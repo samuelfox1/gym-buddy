@@ -12,6 +12,7 @@ $(document).ready(() => {
             console.log(data.title)
             $('#allRoutineWindow').fadeOut(x => {
                 $('#selectedRoutineTitle').text(`${data.title}`)
+                $('#selectedRoutineTitle').attr('data-id', data._id)
                 $('#selectedRoutineWindow').fadeIn('slow')
             })
         })

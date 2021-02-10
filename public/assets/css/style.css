@@ -22,10 +22,15 @@ body {
     color: rgba(255, 0, 0, 0.664) !important ;
 }
 
-.landing-item {
+.home-item {
     margin: 2rem !important;
     border-radius: 1rem;
 }
+
+li{
+    margin: 1rem;
+}
+
 
 @media screen and (max-width: 990px) {
     body {

@@ -1,16 +1,11 @@
-//express router and setup and session cookie
 const express = require("express");
 const session = require("express-session");
-
-// mongoDB tools
 const mongoose = require("mongoose");
-
-//logs the network activity and status codes
+const mongojs = require("mongojs");
 const logger = require("morgan");
-
-//used to encrypt passwords and hide sensitive information
 const bcrypt = require("bcrypt");
 require("dotenv").config();
+
 
 // setup express router and data parsing
 const PORT = process.env.PORT || 8080;
@@ -20,7 +15,6 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(express.static("public"));
 
-
 // set mongoDB source and connect collection model files
 const db = require("./models");
 mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/gymbuddy", {
@@ -29,33 +23,21 @@ mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/gymbuddy", {
   useUnifiedTopology: true
 });
 
-// Original mongoDB setup without using mongoose ORM
-// const mongojs = require("mongojs");
-// const databaseUrl = "gymbuddy";
-// const collection = ["users", "routines"];
-// const db = mongojs(databaseUrl, collection);
-
 //session settings
 app.use(
   session({
     secret: process.env.SESSION_SECRET,
-
     resave: false,
     saveUninitialized: false,
-    cookie: {
-      maxAge: 1000 * 60 * 60 * 2,
-    },
+    cookie: { maxAge: 1000 * 60 * 60 * 2, }
   })
 );
 
+//=========================== ROUTES ==============================
 
-
-app.get('/api/session', (req, res) => {
-  if (req.session.user) {
-    res.json(req.session.user)
-  } else {
-    res.json(false)
-  }
+app.get('/session', (req, res) => {
+  if (req.session.user) { res.json(req.session.user) }
+  else { res.json(false) }
 })
 
 app.get('/logout', (req, res) => {
@@ -63,24 +45,22 @@ app.get('/logout', (req, res) => {
   res.json('goodbye')
 })
 
+//=========================== EXERCISE ROUTES ==============================
+//=========================== ROUTINE ROUTES ==============================
+//=========================== USER ROUTES ==============================
 
 app.post('/signUp', (req, res) => {
   let uniqueUsername = true
   let uniqueEmail = true
-
   db.User.find({}, (err, data) => {
-    if (err) {
-      console.log(err)
-      res.status(500).send("error")
-    } else {
+    if (err) { console.log(err), res.status(500).send("error") }
+    else {
       data.forEach(x => {
         if (x.username === req.body.username) { uniqueUsername = false }
         if (x.email === req.body.email) { uniqueEmail = false }
       });
     }
-
     if (uniqueUsername && uniqueEmail) {
-      console.log('creating entry =====================')
       db.User.create({
         username: req.body.username,
         first_name: req.body.first_name,
@@ -88,26 +68,16 @@ app.post('/signUp', (req, res) => {
         email: req.body.email,
         password: bcrypt.hashSync(req.body.password, bcrypt.genSaltSync(10), null)
       }, (err, data) => {
-        if (err) {
-          console.log(err)
-          res.status(500).json(err)
-        } else {
-          res.json({ username: uniqueUsername, email: uniqueEmail })
-        }
+        if (err) { console.log(err), res.status(500).json(err) }
+        else { res.json({ username: uniqueUsername, email: uniqueEmail }) }
       })
-    } else {
-      res.send({ username: uniqueUsername, email: uniqueEmail })
-    }
-
+    } else { res.json({ username: uniqueUsername, email: uniqueEmail }) }
   })
 })
 
 
 app.post('/login', (req, res) => {
-  db.User.findOne({
-    username: req.body.username
-  }, (err, data) => {
-    console.log(data)
+  db.User.findOne({ username: req.body.username }, (err, data) => {
     if (err) { console.log(err), res.status(500).send("error") }
     if (data) {
       if (bcrypt.compareSync(req.body.password, data.password)) {
@@ -125,7 +95,64 @@ app.post('/login', (req, res) => {
 
 
 
-// TODO: You will make six more routes. Each will use mongojs methods
+//TODO: post request to /api/routine to add routines on form submit
+app.post('/api/routine/:id', (req, res) => {
+  if (req.session.user) {
+    const username = req.session.user.username
+    if (req.params.id === 'new') {
+      db.Routine.create(req.body)
+        .then(({ _id }) => db.User.findOneAndUpdate({ username: username }, { $push: { routines: _id } }, { new: true }))
+        .then(data => { res.json(data) })
+        .catch(err => { res.json(err) })
+    } else { console.log(req.params.id) }
+  } else { res.json('please login') }
+})
+
+// SAVED ROUTINES UL
+//TODO: get request /api/routine to get saved routines and populate a ul with an li for each saved routine
+app.get('/api/routine', (req, res) => {
+  if (req.session.user) {
+    const username = req.session.user.username
+
+    db.User.find({ username: username })
+      .populate('routines')
+      .then(data => { res.json(data) })
+      .catch(err => { res.json(err) })
+  } else { res.json('please login') }
+})
+
+app.get('/api/routine/:id', (req, res) => {
+  if (req.session.user) {
+    db.Routine.findOne({ _id: mongojs.ObjectId(req.params.id) })
+      .populate('exercises')
+      .then(data => { res.json(data) })
+      .catch(err => { res.json(err) })
+  } else { res.json('please login') }
+})
+
+
+
+//TODO: when a routine is selected, get request to api/routine/:id, then fade out routines div, fade in selected routine div
+
+// SELECTED ROUTINE DIV 
+//TODO: each routine div has static form to add exercise
+//TODO: post request to /api/exercise to add exercises to routines
+//TODO: each routine card has an edit title button
+//TODO: each routine card has a delete routine button
+
+//SAVED EXERCISES UL
+//TODO: get request to /api/exercises to get saved exercises and populate a ul with an li for each exercise
+//TODO: each exercise has title, type, weight, sets, reps, duration, cardio toggle w/ distance if isCardio
+//TODO: each exercise li has edit button, make the form look like the li, to activate/deactivate the text field. the edit button doubles as the submit button
+//TODO: each exercise li has delete button
+
+
+app.listen(PORT, () => {
+  console.log("App running on port 3000!");
+});
+
+
+
 // to interact with your mongoDB database, as instructed below.
 // -/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/
 
@@ -210,32 +237,3 @@ app.post('/login', (req, res) => {
 //     }
 //   })
 // })
-
-// Listen on port 3000
-app.listen(PORT, () => {
-  console.log("App running on port 3000!");
-});
-
-
-
-
-
-// ALL ROUTINE DIV
-//TODO: static form to add new routine
-//TODO: post request to /api/routine to add routines on form submit
-
-// SAVED ROUTINES UL
-//TODO: get request /api/routine to get saved routines and populate a ul with an li for each saved routine
-//TODO: when a routine is selected, get request to api/routine/:id, then fade out routines div, fade in selected routine div
-
-// SELECTED ROUTINE DIV 
-//TODO: each routine div has static form to add exercise
-//TODO: post request to /api/exercise to add exercises to routines
-//TODO: each routine card has an edit title button
-//TODO: each routine card has a delete routine button
-
-//SAVED EXERCISES UL
-//TODO: get request to /api/exercises to get saved exercises and populate a ul with an li for each exercise
-//TODO: each exercise has title, type, weight, sets, reps, duration, cardio toggle w/ distance if isCardio
-//TODO: each exercise li has edit button, make the form look like the li, to activate/deactivate the text field. the edit button doubles as the submit button
-//TODO: each exercise li has delete button

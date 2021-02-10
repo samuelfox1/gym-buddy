@@ -14,7 +14,7 @@
 <body>
   <nav>
     <div class="nav-wrapper">
-      <a class="brand-logo home">Gym Buddy</a>
+      <a href="" class="brand-logo home">Gym Buddy</a>
       <a href="" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">fitness_center</i></a>
       <ul class="right hide-on-med-and-down">
         <li><a class="logout">logout</a></li>
@@ -30,117 +30,184 @@
     <div class="row" id="messageBoard" style="display:none">
     </div>
   </div>
-  <main style="display:none">
 
-    <!-- ------------------------------------------- LANDING ----------------------------------------------- -->
-    <div class="collection container" id="landingWindow">
-      <a href="" class="collection-item landing-item" id="signInBtn">login</a>
-      <a href="" class="collection-item landing-item" id="signUpBtn">sign up</a>
+  <!-- ------------------------------------------- HOME ----------------------------------------------- -->
+  <div class="collection container" id="homeWindow" style="display:none">
+    <a href="" class="collection-item home-item" id="signInBtn">login</a>
+    <a href="" class="collection-item home-item" id="signUpBtn">sign up</a>
+  </div>
+  <!-- ------------------------------------------- SIGN UP ----------------------------------------------- -->
+  <div class="container" id="signUpWindow" style="display:none">
+    <div class="row">
+      <form class="col s12">
+        <div class="row">
+          <div class="input-field col s6">
+            <input id="signUpFirst_name" type="text" class="validate">
+            <label for="signUpFirst_name" id="signUpLabelFirstName">First Name</label>
+          </div>
+          <div class="input-field col s6">
+            <input id="signUpLast_name" type="text" class="validate">
+            <label for="signUpLast_name" id="signUpLabelLastName">Last Name</label>
+          </div>
+        </div>
+        <div class="row">
+          <div class="input-field col s12">
+            <input id="signUpUsername" type="text" class="validate">
+            <label for="signUpUsername" id="signUpLabelUsername">username</label>
+          </div>
+        </div>
+        <div class="row">
+          <div class="input-field col s12">
+            <input id="signUpEmail" type="email" class="validate">
+            <label for="signUpEmail" id="signUpLabelEmail">email</label>
+          </div>
+        </div>
+        <div class="row">
+          <div class="input-field col s12">
+            <input id="signUpPassword" type="password" class="validate">
+            <label for="signUpPassword" id="signUpLabelPassword">Password</label>
+            <span class="helper-text">8-16 characters long</span>
+          </div>
+        </div>
+        <div class="row">
+          <div class="input-field col s12">
+            <input id="signUpPasswordConf" type="password" class="validate">
+            <label for="signUpPasswordConf" id="signUpLabelConfirmPassword">Confirm Password</label>
+          </div>
+          <div class="error" id="signUpErrorConfirmPassword">
+          </div>
+        </div>
+        <div class="row">
+          <input type="submit" value="Sign Up" id="submitSignUpBtn">
+        </div>
+      </form>
     </div>
-    <!-- ------------------------------------------- SIGN UP ----------------------------------------------- -->
-    <div class="container" id="signUpWindow" style="display:none">
-      <div class="row">
-        <form class="col s12">
-          <div class="row">
-            <div class="input-field col s6">
-              <input id="signUpFirst_name" type="text" class="validate">
-              <label for="signUpFirst_name" id="signUpLabelFirstName">First Name</label>
-            </div>
-            <div class="input-field col s6">
-              <input id="signUpLast_name" type="text" class="validate">
-              <label for="signUpLast_name" id="signUpLabelLastName">Last Name</label>
-            </div>
+    <form action="" class="signUpForm"></form>
+  </div>
+  <!-- ------------------------------------------- LOGIN ------------------------------------------------- -->
+  <div class="container" id="loginWindow" style="display:none">
+    <div class="row">
+      <form class="col s12">
+        <div class="row">
+          <div class="input-field col s12">
+            <input id="loginUsername" type="text" class="validate">
+            <label for="loginUsername" id="LoginLabelUsername">username</label>
           </div>
-          <div class="row">
+        </div>
+        <div class="row">
+          <div class="input-field col s12">
+            <input id="loginPassword" type="password" class="validate">
+            <label for="loginPassword">Password</label>
+            <!-- <span class="helper-text" data-error="wrong" data-success="right">8-16</span> -->
+            <span class="helper-text">8-16 characters</span>
+          </div>
+        </div>
+        <div class="row">
+          <input type="submit" value="Login" id="submitLoginBtn">
+        </div>
+      </form>
+    </div>
+  </div>
+  <!-- ------------------------------------------- EDIT PROFILE ------------------------------------------ -->
+  <div id="editProfileWindow" style="display:none">
+    <h1>editProfile</h1>
+  </div>
+  <!-- ------------------------------------------- ALL ROUTINES ------------------------------------------- -->
+  <div class="container" id="allRoutineWindow" style="display:none">
+    <div class="row">
+      <div class="col s12 m6">
+        <div class="card container">
+          <div class="card-content">
+            <span class="card-title">Routines</span>
+            <hr>
             <div class="input-field col s12">
-              <input id="signUpUsername" type="text" class="validate">
-              <label for="signUpUsername" id="signUpLabelUsername">username</label>
+              <input id="newRoutine" type="text" class="validate">
+              <label for="newRoutine" id="labelNewRoutine">Add New Routine</label>
+              <a href="" id="addRoutineBtn"><i class="material-icons">add</i></a>
             </div>
+            <ul id="savedRoutines">
+            </ul>
           </div>
-          <div class="row">
-            <div class="input-field col s12">
-              <input id="signUpEmail" type="email" class="validate">
-              <label for="signUpEmail" id="signUpLabelEmail">email</label>
-            </div>
-          </div>
-          <div class="row">
-            <div class="input-field col s12">
-              <input id="signUpPassword" type="password" class="validate">
-              <label for="signUpPassword" id="signUpLabelPassword">Password</label>
-              <span class="helper-text">8-16 characters long</span>
-            </div>
-          </div>
-          <div class="row">
-            <div class="input-field col s12">
-              <input id="signUpPasswordConf" type="password" class="validate">
-              <label for="signUpPasswordConf" id="signUpLabelConfirmPassword">Confirm Password</label>
-            </div>
-            <div class="error" id="signUpErrorConfirmPassword">
-            </div>
-          </div>
-          <div class="row">
-            <input type="submit" value="Sign Up" id="submitSignUpBtn">
-          </div>
-        </form>
+        </div>
       </div>
-      <form action="" class="signUpForm"></form>
     </div>
-    <!-- ------------------------------------------- LOGIN ------------------------------------------------- -->
-    <div class="container" id="loginWindow" style="display:none">
-      <div class="row">
-        <form class="col s12">
-          <div class="row">
+  </div>
+
+
+  <!-- ------------------------------------------- ACTIVE ROUTINE ---------------------------------------- -->
+  <div class="container" id="selectedRoutineWindow" style="display:none">
+    <div class="row">
+      <div class="col s12 m6">
+        <div class="card container">
+          <div class="card-content">
+            <span class="card-title" id="selectedRoutineTitle"></span>
+            <hr>
             <div class="input-field col s12">
-              <input id="loginUsername" type="text" class="validate">
-              <label for="loginUsername" id="LoginLabelUsername">username</label>
+              <!-- <input id="newExercise" type="text" class="validate">
+              <label for="newExercise" id="labelnewExercise">Add New Exercise</label> -->
+              <a id="addExerciseBtn">Add Exercise<i class="material-icons">add</i></a>
+              <hr>
             </div>
-          </div>
-          <div class="row">
-            <div class="input-field col s12">
-              <input id="loginPassword" type="password" class="validate">
-              <label for="loginPassword">Password</label>
-              <!-- <span class="helper-text" data-error="wrong" data-success="right">8-16</span> -->
-              <span class="helper-text">8-16 characters</span>
+            <div id="exerciseForm" style="display:none">
+              <form class="col s12">
+                <div class="row">
+                  <div class="input-field col s12">
+                    <input id="addExerciseTitle" type="text" class="validate">
+                    <label for="addExerciseTitle" id="labelAddExerciseTitle">Title</label>
+                  </div>
+                  <div class="input-field col s12">
+                    <input id="addExerciseType" type="text" class="validate">
+                    <label for="addExerciseType" id="labelAddExerciseType">Type</label>
+                  </div>
+                  <div class="input-field col s12">
+                    <input id="addExerciseWeight" type="text" class="validate">
+                    <label for="addExerciseWeight" id="labelAddExerciseWeight">Weight</label>
+                  </div>
+                  <div class="input-field col s12">
+                    <input id="addExerciseSets" type="text" class="validate">
+                    <label for="addExerciseSets" id="labelAddExerciseSets">Sets</label>
+                  </div>
+                  <div class="input-field col s12">
+                    <input id="addExerciseReps" type="text" class="validate">
+                    <label for="addExerciseReps" id="labelAddExerciseReps">Reps</label>
+                  </div>
+                  <div class="input-field col s12">
+                    <input id="addExerciseDuration" type="text" class="validate">
+                    <label for="addExerciseDuration" id="labelAddExerciseDuration">Duration</label>
+                  </div>
+                  <div class="input-field col s12">
+                    <p>
+                      <label>
+                        <input id="cardioCheckbox" type="checkbox" />
+                        <span>Cardio</span>
+                      </label>
+                    </p>
+                    <input disabled id="addExerciseDistance" type="text" class="validate">
+                    <label for="addExerciseDistance" id="labelAddExerciseDistance">Distance</label>
+                  </div>
+                </div>
+                <div class="row">
+                  <input type="submit" value="Add Exercise" id="submitExerciseBtn">
+                </div>
+              </form>
             </div>
+            <ul id="savedRoutines">
+              <li>example</li>
+            </ul>
           </div>
-          <div class="row">
-            <input type="submit" value="Login" id="submitLoginBtn">
-          </div>
-        </form>
+        </div>
       </div>
     </div>
-    <!-- ------------------------------------------- HOME -------------------------------------------------- -->
-    <div id="homeWindow" style="display:none">
-      <h1>userHome</h1>
-    </div>
-    <!-- ------------------------------------------- EDIT PROFILE ------------------------------------------ -->
-    <div id="editProfileWindow" style="display:none">
-      <h1>editProfile</h1>
-    </div>
-    <!-- ------------------------------------------- NEW ROUTINE ------------------------------------------- -->
-    <div id="newRoutineWindow" style="display:none">
-      <h1>newRoutine</h1>
-    </div>
-
-    <!-- ------------------------------------------- EDIT ROUTINE ------------------------------------------ -->
-    <div id="editRoutineWindow" style="display:none">
-      <h1>editRoutine</h1>
-    </div>
-    <!-- ------------------------------------------- ACTIVE ROUTINE ---------------------------------------- -->
-    <div id="activeRoutineWindow" style="display:none">
-      <h1>activeRoutine</h1>
-    </div>
-  </main>
-
-
-
+  </div>
+  </div>
 
   <script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="
     crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-  <script src="assets/js/signUp.js"></script>
   <script src="assets/js/login.js"></script>
+  <script src="assets/js/routines.js"></script>
   <script src="assets/js/script.js"></script>
+  <script src="assets/js/signUp.js"></script>
 </body>
 
 </html>

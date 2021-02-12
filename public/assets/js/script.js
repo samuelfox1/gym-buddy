@@ -88,13 +88,29 @@ $(document).ready(() => {
                     $('#savedExercises').append(`<li>Please add an exercise to start</li>`)
                 } else {
                     exercises.forEach(x => {
-                        $('#savedExercises').append(`<li><a id="userExercise" data-id="${x._id}">${x.title}</a></li>`)
+                        $('#savedExercises').append(`
+                        <li>
+                        <a id="userExercise" data-id="${x._id}">${x.title}</a>
+                        <ul style="display:none">
+                        <hr>
+                        <li>Type: ${x.type}</li>
+                        <li>Weight: ${x.weight}</li>
+                        <li>Sets: ${x.sets}</li>
+                        <li>Reps: ${x.reps}</li>
+                        <li>Duration: ${x.duration} mins</li>
+                        <hr>
+                        </ul>
+                        </li>`)
                     });
                 }
-                $('#selectedRoutineWindow').fadeIn('slow')
+                $('#selectedRoutineWindow').fadeIn()
             })
         }).fail(err => { console.log(err) })
     }
+
+    $(document).on('click', '#userExercise', function () {
+        $(this).next().slideToggle('slow')
+    })
 
 
     $(document).on('click', '#addExerciseForm', function () {

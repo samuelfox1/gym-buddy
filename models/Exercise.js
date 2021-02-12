@@ -12,8 +12,9 @@ const ExerciseSchema = new Schema({
         required: 'excercise type required'
     },
     weight: {
-        type: Number,
-        required: false
+        type: String,
+        required: false,
+        default: 'body'
     },
     sets: {
         type: Number,

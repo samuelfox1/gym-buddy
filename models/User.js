@@ -29,12 +29,10 @@ const UserSchema = new Schema({
         trim: true,
         required: 'password required'
     },
-    routines: [
-        {
-            type: Schema.Types.ObjectId,
-            ref: 'Routine'
-        }
-    ]
+    routines: [{
+        type: Schema.Types.ObjectId,
+        ref: 'Routine'
+    }]
 })
 
 const User = mongoose.model('User', UserSchema)

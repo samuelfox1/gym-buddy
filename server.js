@@ -33,8 +33,9 @@ app.use(
   })
 );
 
-//=========================== ROUTES ==============================
 
+
+//=========================== UTILITY ROUTES ==============================
 app.get('/session', (req, res) => {
   if (req.session.user) { res.json(req.session.user) }
   else { res.json(false) }
@@ -44,10 +45,6 @@ app.get('/logout', (req, res) => {
   req.session.destroy()
   res.json('goodbye')
 })
-
-//=========================== EXERCISE ROUTES ==============================
-//=========================== ROUTINE ROUTES ==============================
-//=========================== USER ROUTES ==============================
 
 app.post('/signUp', (req, res) => {
   let uniqueUsername = true
@@ -75,7 +72,6 @@ app.post('/signUp', (req, res) => {
   })
 })
 
-
 app.post('/login', (req, res) => {
   db.User.findOne({ username: req.body.username }, (err, data) => {
     if (err) { console.log(err), res.status(500).send("error") }
@@ -93,27 +89,12 @@ app.post('/login', (req, res) => {
 })
 
 
-
-
-app.post('/api/routine/:id', (req, res) => {
-  if (req.session.user) {
-    const username = req.session.user.username
-    if (req.params.id === 'new') {
-      db.Routine.create(req.body)
-        .then(({ _id }) => db.User.findOneAndUpdate({ username: username }, { $push: { routines: _id } }, { new: true }))
-        .then(data => { res.json(data) })
-        .catch(err => { res.json(err) })
-    } else { console.log(req.params.id) }
-  } else { res.json('please login') }
-})
-
-
-
+//=========================== ROUTINE ROUTES ==============================
 app.get('/api/routine', (req, res) => {
   if (req.session.user) {
     const username = req.session.user.username
 
-    db.User.find({ username: username })
+    db.User.findOne({ username: username })
       .populate('routines')
       .then(data => { res.json(data) })
       .catch(err => { res.json(err) })
@@ -129,6 +110,20 @@ app.get('/api/routine/:id', (req, res) => {
   } else { res.json('please login') }
 })
 
+app.post('/api/routine/:id', (req, res) => {
+  if (req.session.user) {
+    const username = req.session.user.username
+    if (req.params.id === 'new') {
+      db.Routine.create(req.body)
+        .then(({ _id }) => db.User.findOneAndUpdate({ username: username }, { $push: { routines: _id } }, { new: true }))
+        .then(data => { res.json(data) })
+        .catch(err => { res.json(err) })
+    } else { console.log(req.params.id) }
+  } else { res.json('please login') }
+})
+
+
+//=========================== EXERCISE ROUTES ==============================
 app.post('/api/exercise', (req, res) => {
   if (req.session.user) {
     db.Exercise.create(req.body)
@@ -139,7 +134,20 @@ app.post('/api/exercise', (req, res) => {
 })
 
 
-//TODO: post request to /api/exercise to add exercises to routines
+app.listen(PORT, () => {
+  console.log(`App running on port ${PORT}!`);
+});
+
+// 1. load routines
+// 2. add routine, then load routines
+// 3. select routine, load exercises
+
+// 1. load exercises
+// 2. add exercise, then load exercises
+// 3. select exercise, toggle drop down
+
+
+
 //TODO: each routine card has an edit title button
 //TODO: each routine card has a delete routine button
 
@@ -150,9 +158,7 @@ app.post('/api/exercise', (req, res) => {
 //TODO: each exercise li has delete button
 
 
-app.listen(PORT, () => {
-  console.log("App running on port 3000!");
-});
+
 
 
 

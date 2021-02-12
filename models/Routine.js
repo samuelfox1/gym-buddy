@@ -7,10 +7,10 @@ const RoutineSchema = new Schema({
         trim: true,
         required: 'title required'
     },
-    exercises: {
+    exercises: [{
         type: Schema.Types.ObjectId,
         ref: 'Exercise'
-    }
+    }]
 })
 
 const Routine = mongoose.model('Routine', RoutineSchema)

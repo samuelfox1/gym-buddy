@@ -31,6 +31,11 @@ li{
     margin: 1rem;
 }
 
+.mb0 {
+    margin-bottom: 0;
+}
+
+
 
 @media screen and (max-width: 990px) {
     body {

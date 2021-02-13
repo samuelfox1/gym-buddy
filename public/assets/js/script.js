@@ -34,14 +34,14 @@ $(document).ready(() => {
 
     $(document).on('click', '#addRoutineBtn', (e) => {
         e.preventDefault()
-        const input = $('#newRoutine').val().trim()
+        const input = $('#newRoutine')
         if (input) {
             $.ajax({
                 type: 'POST',
                 dataType: 'json',
                 url: '/api/routine/new',
-                data: { title: input }
-            }).then(data => { getAllRoutines() })
+                data: { title: input.val().trim() }
+            }).then(data => { input.val(''), getAllRoutines() })
                 .fail(err => { console.log(err) })
         }
     })
@@ -55,7 +55,6 @@ $(document).ready(() => {
         }).then(data => {
             $('#savedRoutines').empty()
             const routines = data.routines
-            console.log(routines)
             if (routines.length === 0) {
                 $('#savedRoutines').append(`<li>Please add a routine to start</li>`)
             } else {
@@ -79,7 +78,7 @@ $(document).ready(() => {
             url: `/api/routine/${x}`,
         }).then(data => {
             $('#allRoutineWindow').fadeOut(() => {
-                $('#selectedRoutineTitle').text(`${data.title}`)
+                $('#selectedRoutineTitle').val(`${data.title}`)
                 $('#selectedRoutineTitle').attr('data-id', data._id)
                 $('#savedExercises').empty()
 
@@ -88,25 +87,72 @@ $(document).ready(() => {
                     $('#savedExercises').append(`<li>Please add an exercise to start</li>`)
                 } else {
                     exercises.forEach(x => {
-                        $('#savedExercises').append(`
-                        <li>
-                        <a id="userExercise" data-id="${x._id}">${x.title}</a>
-                        <ul style="display:none">
-                        <hr>
-                        <li>Type: ${x.type}</li>
-                        <li>Weight: ${x.weight}</li>
-                        <li>Sets: ${x.sets}</li>
-                        <li>Reps: ${x.reps}</li>
-                        <li>Duration: ${x.duration} mins</li>
-                        <hr>
-                        </ul>
-                        </li>`)
+                        $('#savedExercises').append(
+                            `<li>
+                            <a id="userExercise" data-id="${x._id}">${x.title}</a>
+                            <ul style="display:none">
+                            <hr>
+                            <li>Type: ${x.type}</li>
+                            <li>Weight: ${x.weight}</li>
+                            <li>Sets: ${x.sets}</li>
+                            <li>Reps: ${x.reps}</li>
+                            <li>Duration: ${x.duration} mins</li>
+                            <hr>
+                            </ul>
+                            </li>`
+                        )
                     });
                 }
+
                 $('#selectedRoutineWindow').fadeIn()
             })
         }).fail(err => { console.log(err) })
     }
+
+
+    $(document).on('click', '#selectedRoutineEditTitle', function () {
+        //toggle the 'disabled' property for the text input
+        $('#selectedRoutineTitle').prop('disabled', (_, val) => !val)
+
+        if ($(this).text() === "create") { $(this).text('save') }
+        else {
+            const title = $('#selectedRoutineTitle').val()
+            const id = $('#selectedRoutineTitle').data('id')
+
+            const type = 'PUT'
+            const url = `/api/routine/${id}`
+            const data = { title }
+            ajaxCall(type, url, data)
+
+            $(this).text('create')
+        }
+    })
+
+
+    function ajaxCall(type, url, data) {
+        $.ajax({
+            type: type,
+            dataType: 'json',
+            url: url,
+            data: data
+        }).then(data => { console.log(data) })
+            .fail(err => { console.log(err) })
+    }
+
+    $(document).on('click', '#selectedRoutineDelete', function () {
+        const id = $('#selectedRoutineTitle').data('id')
+        const type = 'DELETE'
+        const url = `/api/routine/${id}`
+        const data = null
+        ajaxCall(type, url, data)
+        $('#selectedRoutineWindow').fadeOut(() => {
+            loadSession()
+        })
+
+
+    })
+
+
 
     $(document).on('click', '#userExercise', function () {
         $(this).next().slideToggle('slow')
@@ -162,11 +208,13 @@ $(document).ready(() => {
             url: '/session'
         }).then(data => {
             if (data) {
+                $('#messageBoard').empty()
                 $('#messageBoard').prepend(`<h5>welcome, ${data.first_name}</h5>`)
                 $('#messageBoard').fadeIn('slow')
                 $('#allRoutineWindow').fadeIn('slow')
                 getAllRoutines()
             } else {
+                $('#messageBoard').empty()
                 $('#messageBoard').prepend(`<h5>please login or sign up</h5>`)
                 $('#messageBoard').fadeIn('slow')
                 $('#homeWindow').fadeIn('slow')

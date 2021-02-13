@@ -122,6 +122,24 @@ app.post('/api/routine/:id', (req, res) => {
   } else { res.json('please login') }
 })
 
+app.put('/api/routine/:id', (req, res) => {
+  console.log(req.body)
+  if (req.session.user) {
+    db.Routine.findByIdAndUpdate({ _id: mongojs.ObjectId(req.params.id) }, { $set: { title: req.body.title } })
+      .then(data => { res.json(data) })
+      .catch(err => { res.json(err) })
+  } else { res.json('please login') }
+})
+
+app.delete('/api/routine/:id', (req, res) => {
+  console.log(req.body)
+  if (req.session.user) {
+    db.Routine.findByIdAndDelete({ _id: mongojs.ObjectId(req.params.id) })
+      .then(data => { res.json(data) })
+      .catch(err => { res.json(err) })
+  } else { res.json('please login') }
+})
+
 
 //=========================== EXERCISE ROUTES ==============================
 app.post('/api/exercise', (req, res) => {

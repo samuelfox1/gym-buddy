@@ -25,12 +25,10 @@
   <ul class="sidenav" id="mobile-demo">
     <li><a class="logout">logout</a></li>
   </ul>
-
   <div class="container">
     <div class="row" id="messageBoard" style="display:none">
     </div>
   </div>
-
   <!-- ------------------------------------------- HOME ----------------------------------------------- -->
   <div class="collection container" id="homeWindow" style="display:none">
     <a href="" class="collection-item home-item" id="signInBtn">login</a>
@@ -98,7 +96,6 @@
           <div class="input-field col s12">
             <input id="loginPassword" type="password" class="validate">
             <label for="loginPassword">Password</label>
-            <!-- <span class="helper-text" data-error="wrong" data-success="right">8-16</span> -->
             <span class="helper-text">8-16 characters</span>
           </div>
         </div>
@@ -134,56 +131,12 @@
       </div>
     </div>
   </div>
-
-
   <!-- ------------------------------------------- ACTIVE ROUTINE ---------------------------------------- -->
   <div class="container" id="selectedRoutineWindow" style="display:none">
     <div class="row">
       <div class="col s12 m6">
         <div class="card container">
           <div class="card-content">
-
-
-            <!-- <div class="row card-title">
-              <a href="/" class="col-s2" id=""><i class="material-icons">chevron_left</i></a>
-              <span class="col-s10" id="selectedRoutineTitle">Test</span>
-            </div> -->
-
-
-
-
-            <!-- 
-            <div class="row card-title">
-
-              <a href="/"><i class="material-icons">chevron_left</i> </a>
-              <span class="pull-s7" id="selectedRoutineTitle"></span>
-
-            </div> -->
-            <!-- <li>
-              <div class="row">
-                <div class="col s10">
-                  <a id="userExercise" data-id="${x._id}">${x.title}</a>
-                  <input disabled class="pull-s7" id="selectedRoutineTitle">
-                </div>
-                <div class="col s2">
-                  <a><i class="material-icons" id="userExerciseDelete">clear</i></a>
-                </div>
-              </div>
-              <ul id="selectedExerciseData" style="display:none">
-                <li> <input disabled id="exerciseType" type="text" class="validate"> </li>
-                <li> <input disabled id="exerciseWeight" type="text" class="validate"> </li>
-                <li> <input disabled id="exerciseSets" type="text" class="validate"> </li>
-                <li> <input disabled id="exerciseReps" type="text" class="validate"> </li>
-                <li> <input disabled id="exerciseDuration" type="text" class="validate"> </li>
-                <hr>
-              </ul>
-            </li> -->
-
-
-
-
-
-
             <div class="row card-title">
               <div class="col s2">
                 <a href="/"><i class="material-icons">chevron_left</i></a>
@@ -196,52 +149,41 @@
                 <a><i class="material-icons" id="selectedRoutineDelete">clear</i></a>
               </div>
             </div>
-            <!-- <hr> -->
-
             <div class="row mb0 valign-wrapper left-align">
               <div class="input-field col s2">
                 <a id="addExerciseForm"><i id="addExerciseIcon" class="material-icons">arrow_downward</i></a>
               </div>
-
               <hr>
               <div class="input-field col s10">
                 <p>Add Exercise</p>
               </div>
             </div>
-
             <div id="exerciseForm" style="display:none">
               <form class="col s12">
-
                 <div class="input-field col s12">
                   <input id="addExerciseTitle" type="text" class="validate">
                   <label for="addExerciseTitle" id="labelAddExerciseTitle">Title</label>
                 </div>
-
                 <div class="input-field col s12">
                   <input id="addExerciseType" type="text" class="validate">
                   <label for="addExerciseType" id="labelAddExerciseType">Type</label>
                 </div>
-
                 <div class="input-field col s12">
                   <input id="addExerciseWeight" type="text" class="validate">
                   <label for="addExerciseWeight" id="labelAddExerciseWeight">Weight</label>
                 </div>
-
                 <div class="input-field col s12">
                   <input id="addExerciseSets" type="text" class="validate">
                   <label for="addExerciseSets" id="labelAddExerciseSets">Sets</label>
                 </div>
-
                 <div class="input-field col s12">
                   <input id="addExerciseReps" type="text" class="validate">
                   <label for="addExerciseReps" id="labelAddExerciseReps">Reps</label>
                 </div>
-
                 <div class="input-field col s12">
                   <input id="addExerciseDuration" type="text" class="validate">
                   <label for="addExerciseDuration" id="labelAddExerciseDuration">Duration (mins)</label>
                 </div>
-
                 <div class="input-field col s12">
                   <p>
                     <label>
@@ -249,14 +191,11 @@
                       <span>Cardio</span>
                     </label>
                   </p>
-
                   <input disabled id="addExerciseDistance" type="text" class="validate">
                   <label for="addExerciseDistance" id="labelAddExerciseDistance">Distance</label>
-
                 </div>
                 <input type="submit" value="Add Exercise" id="submitExerciseBtn">
                 <hr>
-
               </form>
             </div>
             <hr>
@@ -268,8 +207,6 @@
     </div>
   </div>
   </div>
-
-
   <script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="
     crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>

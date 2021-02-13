@@ -208,9 +208,10 @@ $(document).ready(() => {
             url: '/session'
         }).then(data => {
             if (data) {
-                $('#messageBoard').empty()
-                $('#messageBoard').prepend(`<h5>welcome, ${data.first_name}</h5>`)
-                $('#messageBoard').fadeIn('slow')
+                // $('#messageBoard').empty()
+                // $('#messageBoard').prepend(`<h5>welcome, ${data.first_name}</h5>`)
+                // $('#messageBoard').fadeIn('slow')
+                $('#routineTitle').text(`${data.first_name}'s Routines`)
                 $('#allRoutineWindow').fadeIn('slow')
                 getAllRoutines()
             } else {

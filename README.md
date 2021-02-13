@@ -33,8 +33,11 @@
 
 
 >## Product
-
-* [Check it out!](https://sjf-gym-buddy.herokuapp.com/) 
+>>  ### [Check it out!](https://sjf-gym-buddy.herokuapp.com/) 
+>>  #### Demo Login
+>>  #### Username: demo
+>>  #### Password: password
+ 
 
 ![Screenshot](public/assets/images/screenshot.png)
 

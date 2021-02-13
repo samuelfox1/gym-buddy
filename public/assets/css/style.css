@@ -1,10 +1,27 @@
 body {
     background-color: rgba(250, 128, 114, 0.281);
+    background-image: url('../images/background.jpg');
+    background-position: center;
+    /* background-repeat: no-repeat; */
+    background-size: cover;
     text-align: center;
+    height: 100vh;
+    font-family: 'Architects Daughter', cursive;
 }
 
 .nav-wrapper {
     text-align: start !important;
+}
+nav{
+    background-color: rgb(74, 109, 60);
+}
+.sidenav {
+    background-color: rgb(74, 109, 60);
+    /* background-color: rgb(255, 127, 80); */
+}
+
+.text-white {
+    color: rgba(255, 255, 255, 0.699) !important;    
 }
 
 .brand-logo {
@@ -30,19 +47,34 @@ body {
 li{
     margin: 1rem;
 }
-
 .mb0 {
-    margin-bottom: 0;
+    margin-bottom: 0 !important;
 }
-
+.pb0 {
+    padding-bottom: 0 !important;
+}
+.ml1 {
+    margin-left: 1rem !important;
+}
 
 
 @media screen and (max-width: 990px) {
     body {
-        background-color: rgba(100, 148, 237, 0.281);
+        background-color: rgba(0, 25, 70, 0.466);
     }
-
+    
     .container {
         width: 80vw;
+    }
+    
+    .icon-border {
+        border: 1px solid rgba(0, 0, 0, 0.24);
+        border-radius: .5rem;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 3rem;
+        height: 3rem !important;
+        margin: .75rem .75rem !important;
     }
 }

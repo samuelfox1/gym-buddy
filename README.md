@@ -42,6 +42,7 @@
  
 
 ![Screenshot](public/assets/images/screenshot.png)
+![Screenshot](public/assets/images/screenshot2.png)
 
 
 
